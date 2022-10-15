@@ -13,7 +13,7 @@ server.app.use(body_parser_1.default.json());
 server.app.use(body_parser_1.default.urlencoded({ extended: true }));
 server.app.use('/', default_routes_1.default);
 server.app.use('/peliculas', pelicula_routes_1.default);
-mongoose_1.default.connect('mongodb+srv://usr_peli:calipso1107@cluster0.iie44np.mongodb.net/?retryWrites=true&w=majority', (error) => {
+mongoose_1.default.connect('mongodb+srv://usr_peli:calipso1107@cluster0.iie44np.mongodb.net/proyectoDb', (error) => {
     if (error) {
         throw error;
     }
