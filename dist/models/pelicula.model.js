@@ -14,10 +14,6 @@ const peliculaSchema = new mongoose_1.Schema({
     categoria: {
         type: String,
         require: [true, 'La categoria es requerida']
-    },
-    imagen: {
-        type: String,
-        require: [true, 'La imagen es requerida']
     }
 });
 exports.Pelicula = (0, mongoose_1.model)('Pelicula', peliculaSchema);
