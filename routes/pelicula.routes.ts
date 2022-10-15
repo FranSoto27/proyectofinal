@@ -13,7 +13,23 @@ peliculaRoutes.get('/',async (req:Request,res:Response)=>{
         peliculas
     })
     
-})
+});
+
+peliculaRoutes.get('/paging', async (req:Request,res:Response)=>{
+
+
+    let perPage = 2;
+    let page = Number(req.query.page) || 1 ;
+    let skip = page-1;
+    skip = skip*perPage;
+
+    const peliculas = await Pelicula.find().skip(skip).limit(perPage);
+
+    return res.json({
+        ok:true,
+        peliculas
+    })
+});
 
 peliculaRoutes.post('/',(req:Request,res:Response)=>{
 
@@ -64,7 +80,7 @@ peliculaRoutes.put('/:id', (req:Request, res:Response)=>{
     
 });
 
-peliculaRoutes.delete('/', async (req:Request, res:Response)=>{
+/* peliculaRoutes.delete('/', async (req:Request, res:Response)=>{
 
 const peliculaId = req.query.id;
 
@@ -96,6 +112,52 @@ Pelicula.findByIdAndDelete(peliculaId).then(pelicula=>{
         msj:"El registro solicitado no existe"
     })
     })
-});
+}); */
+
+peliculaRoutes.delete('/',async (req:Request,res:Response)=>{
+    const peliculaId = req.query.id;
+
+    if(!peliculaId){
+
+        return res.json({
+            ok:false,
+            msj: "El registro solicitado no existe"
+      })
+        
+    }
+
+    // const personajeDb = await Personaje.findById(personajeId);
+
+    // if(personajeDb){
+    //     return res.json({
+    //         ok:false,
+    //         msj: "El registro solicitado no existe"
+    //   })
+    // }
+
+
+
+
+
+    Pelicula.findByIdAndDelete(peliculaId).then(pelicula=>{
+        return res.json({
+            ok:true,
+            msj: "Eliminado correctamente"
+      })
+
+    }).catch(err=>{
+        return res.json({
+            ok:false,
+            msj: "El registro solicitado no existe"
+      })
+
+    })
+
+
+    // console.log(personajeId);
+
+
+ 
+})
 
 export default peliculaRoutes;

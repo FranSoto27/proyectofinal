@@ -19,6 +19,17 @@ peliculaRoutes.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function
         peliculas
     });
 }));
+peliculaRoutes.get('/paging', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    let perPage = 2;
+    let page = Number(req.query.page) || 1;
+    let skip = page - 1;
+    skip = skip * perPage;
+    const peliculas = yield pelicula_model_1.Pelicula.find().skip(skip).limit(perPage);
+    return res.json({
+        ok: true,
+        peliculas
+    });
+}));
 peliculaRoutes.post('/', (req, res) => {
     const body = req.body;
     const pelicula = {
@@ -53,21 +64,54 @@ peliculaRoutes.put('/:id', (req, res) => {
         });
     });
 });
+/* peliculaRoutes.delete('/', async (req:Request, res:Response)=>{
+
+const peliculaId = req.query.id;
+
+if (peliculaId){
+    return res.json({
+        ok:false,
+        msj:"El registro solicitado no existe"
+    })
+}
+
+const peliculaDb = await Pelicula.findById(peliculaId);
+
+if(!peliculaDb){
+    return res.json({
+        ok:false,
+        msj:"El registro solicitado no existe"
+    })
+}
+
+Pelicula.findByIdAndDelete(peliculaId).then(pelicula=>{
+
+    return res.json({
+        ok:true,
+        msj:"Eliminado correctamente"
+    })
+}).catch(err=>{
+    return res.json({
+        ok:false,
+        msj:"El registro solicitado no existe"
+    })
+    })
+}); */
 peliculaRoutes.delete('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const peliculaId = req.query.id;
-    if (peliculaId) {
+    if (!peliculaId) {
         return res.json({
             ok: false,
             msj: "El registro solicitado no existe"
         });
     }
-    const peliculaDb = yield pelicula_model_1.Pelicula.findById(peliculaId);
-    if (!peliculaDb) {
-        return res.json({
-            ok: false,
-            msj: "El registro solicitado no existe"
-        });
-    }
+    // const personajeDb = await Personaje.findById(personajeId);
+    // if(personajeDb){
+    //     return res.json({
+    //         ok:false,
+    //         msj: "El registro solicitado no existe"
+    //   })
+    // }
     pelicula_model_1.Pelicula.findByIdAndDelete(peliculaId).then(pelicula => {
         return res.json({
             ok: true,
@@ -79,5 +123,6 @@ peliculaRoutes.delete('/', (req, res) => __awaiter(void 0, void 0, void 0, funct
             msj: "El registro solicitado no existe"
         });
     });
+    // console.log(personajeId);
 }));
 exports.default = peliculaRoutes;
