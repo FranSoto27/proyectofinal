@@ -35,7 +35,8 @@ peliculaRoutes.post('/', (req, res) => {
     const pelicula = {
         nombre: body.nombre,
         director: body.director,
-        categoria: body.categoria
+        categoria: body.categoria,
+        imagen: body.imagen
     };
     pelicula_model_1.Pelicula.create(pelicula).then(peliculaDb => {
         return res.json({
@@ -55,7 +56,8 @@ peliculaRoutes.put('/:id', (req, res) => {
     const pelicula = {
         nombre: body.nombre,
         director: body.director,
-        categoria: body.categoria
+        categoria: body.categoria,
+        imagen: body.imagen
     };
     pelicula_model_1.Pelicula.findByIdAndUpdate(peliculaId, pelicula).then(peliculaDb => {
         return res.json({

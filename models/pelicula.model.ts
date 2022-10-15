@@ -13,13 +13,18 @@ const peliculaSchema = new Schema({
     categoria: {
         type: String,
         require : [true, 'La categoria es requerida']
+    },
+    imagen: {
+        type: String,
+        require : [true, 'La imagen es requerida']
     }
 });
 
 interface IPelicula extends Document{
     nombre:string;
     director:string;
-    categoria:string
+    categoria:string;
+    imagen:string;
 
 }
 
